@@ -14,8 +14,8 @@ import java.util.List;
 
 public class GalleryAdapterByDecade extends BaseGalleryAdapter {
 
-    public GalleryAdapterByDecade(List<PickerTile> itemList) {
-        super(itemList);
+    public GalleryAdapterByDecade() {
+        super();
     }
 
     @Override

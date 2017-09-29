@@ -8,6 +8,7 @@
     android:clickable="true"
     android:id="@+id/multiselect_picker"
     android:focusable="false"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -15,7 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?colorPrimary"
-        app:layout_anchor="@id/main.framelayout.title"
         app:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:title="Pick items" />
 
@@ -23,8 +23,6 @@
         android:id="@+id/expanded_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0"
-        android:background="@color/white"
         android:visibility="visible" />
 </LinearLayout>
     

@@ -50,7 +50,7 @@ public class CameraControlPanel extends RelativeLayout
     private ImageButton settingsButton;
     private ImageButton pickFromGalleryButton;
     private RecyclerView anchoredRecyclerView;
-    private RecyclerView expandedRecyclerView;
+    private MutipleItemSelectView multiSelectPicker;
 
     private ImageGalleryAdapter imageGalleryAdapter;
     private RecordButton.RecordButtonListener recordButtonListener;
@@ -102,7 +102,7 @@ public class CameraControlPanel extends RelativeLayout
         recordDurationText = (TextView) findViewById(R.id.record_duration_text);
         recordSizeText = (TextView) findViewById(R.id.record_size_mb_text);
         anchoredRecyclerView = (RecyclerView) findViewById(R.id.anchored_recycler_view);
-        expandedRecyclerView = (RecyclerView) findViewById(R.id.expanded_recycler_view);
+        multiSelectPicker = (MutipleItemSelectView) findViewById(R.id.multi_selector_view);
 
 
         anchoredRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -143,9 +143,9 @@ public class CameraControlPanel extends RelativeLayout
     public void fadeViewsWithOffset(float slideOffset) {
         anchoredRecyclerView.animate().alpha(1.0f - slideOffset);
         if (slideOffset <= 0.2) {
-            expandedRecyclerView.animate().alpha(0);
+            multiSelectPicker.animate().alpha(0);
         } else {
-            expandedRecyclerView.animate().alpha(slideOffset);
+            multiSelectPicker.animate().alpha(slideOffset);
         }
     }
 

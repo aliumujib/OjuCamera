@@ -15,6 +15,7 @@ import com.alium.ojucamera.internal.ui.model.PickerTile;
 import com.alium.ojucamera.internal.ui.view.adapters.GalleryViewHolder;
 import com.zhukic.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,13 +25,18 @@ import java.util.List;
 
 public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<BaseGalleryAdapter.SubheaderHolder, GalleryViewHolder> {
 
+    public void addAll(List<PickerTile> pickerTiles) {
+        movieList.addAll(pickerTiles);
+        notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener {
         void onItemClicked(PickerTile movie);
 
         void onSubheaderClicked(int position);
     }
 
-    List<PickerTile> movieList;
+    List<PickerTile> movieList = new ArrayList<>();
 
     OnItemClickListener onItemClickListener;
 
@@ -54,10 +60,7 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
 
     }
 
-    BaseGalleryAdapter(List<PickerTile> itemList) {
-        super();
-        this.movieList = itemList;
-    }
+
 
     @Override
     public GalleryViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
