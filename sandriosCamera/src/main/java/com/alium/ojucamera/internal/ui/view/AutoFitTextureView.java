@@ -6,9 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.view.TextureView;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 @SuppressLint("ViewConstructor")
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class AutoFitTextureView extends TextureView {

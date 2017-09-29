@@ -5,9 +5,6 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 public final class CameraConfiguration {
 
     public static final int MEDIA_QUALITY_AUTO = 10;

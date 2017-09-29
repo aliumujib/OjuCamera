@@ -20,7 +20,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/ThemeFullscreen" />
         <activity
-            android:name="com.alium.ojucamera.internal.ui.BaseSandriosActivity"
+            android:name="com.alium.ojucamera.internal.ui.BaseOjuCamActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeFullscreen" />
 

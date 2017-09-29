@@ -1,8 +1,6 @@
 package com.alium.ojucamera.internal.configuration;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
+
 public interface ConfigurationProvider {
 
     int getRequestCode();

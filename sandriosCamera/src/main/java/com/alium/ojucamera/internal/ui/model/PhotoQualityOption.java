@@ -3,10 +3,6 @@ package com.alium.ojucamera.internal.ui.model;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.utils.Size;
 
-/**
- * Created by Arpit Gandhi on 12/1/16.
- */
-
 public class PhotoQualityOption implements CharSequence {
 
     @CameraConfiguration.MediaQuality

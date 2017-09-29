@@ -7,7 +7,7 @@ import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.controller.CameraController;
 import com.alium.ojucamera.internal.controller.impl.Camera1Controller;
 import com.alium.ojucamera.internal.controller.view.CameraView;
-import com.alium.ojucamera.internal.ui.BaseSandriosActivity;
+import com.alium.ojucamera.internal.ui.BaseOjuCamActivity;
 import com.alium.ojucamera.internal.ui.model.PhotoQualityOption;
 import com.alium.ojucamera.internal.ui.model.VideoQualityOption;
 import com.alium.ojucamera.internal.utils.CameraHelper;
@@ -15,11 +15,8 @@ import com.alium.ojucamera.internal.utils.CameraHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 @SuppressWarnings("deprecation")
-public class Camera1Activity extends BaseSandriosActivity<Integer> {
+public class Camera1Activity extends BaseOjuCamActivity<Integer> {
 
     @Override
     public CameraController<Integer> createCameraController(CameraView cameraView, ConfigurationProvider configurationProvider) {

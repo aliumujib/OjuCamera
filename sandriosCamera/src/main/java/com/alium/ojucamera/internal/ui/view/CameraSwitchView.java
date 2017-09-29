@@ -16,9 +16,6 @@ import com.alium.ojucamera.internal.utils.Utils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by Arpit Gandhi on 6/24/16.
- */
 public class CameraSwitchView extends AppCompatImageButton {
 
     public static final int CAMERA_TYPE_FRONT = 0;

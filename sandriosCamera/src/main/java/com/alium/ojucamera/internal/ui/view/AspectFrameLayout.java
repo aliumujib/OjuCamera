@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-/**
- * Layout that adjusts to maintain a specific aspect ratio.
- */
 public class AspectFrameLayout extends FrameLayout {
 
     private static final String TAG = "AspectFrameLayout";

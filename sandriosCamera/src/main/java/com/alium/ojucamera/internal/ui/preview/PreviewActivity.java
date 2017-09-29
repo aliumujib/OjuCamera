@@ -23,7 +23,7 @@ import android.widget.MediaController;
 
 import com.alium.ojucamera.R;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
-import com.alium.ojucamera.internal.ui.BaseSandriosActivity;
+import com.alium.ojucamera.internal.ui.BaseOjuCamActivity;
 import com.alium.ojucamera.internal.ui.view.AspectFrameLayout;
 import com.alium.ojucamera.internal.utils.Utils;
 import com.yalantis.ucrop.UCrop;
@@ -34,9 +34,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 public class PreviewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "PreviewActivity";
@@ -150,7 +147,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public static boolean isResultConfirm(@NonNull Intent resultIntent) {
-        return BaseSandriosActivity.ACTION_CONFIRM == resultIntent.getIntExtra(RESPONSE_CODE_ARG, -1);
+        return BaseOjuCamActivity.ACTION_CONFIRM == resultIntent.getIntExtra(RESPONSE_CODE_ARG, -1);
     }
 
     public static String getMediaFilePatch(@NonNull Intent resultIntent) {
@@ -158,11 +155,11 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public static boolean isResultRetake(@NonNull Intent resultIntent) {
-        return BaseSandriosActivity.ACTION_RETAKE == resultIntent.getIntExtra(RESPONSE_CODE_ARG, -1);
+        return BaseOjuCamActivity.ACTION_RETAKE == resultIntent.getIntExtra(RESPONSE_CODE_ARG, -1);
     }
 
     public static boolean isResultCancel(@NonNull Intent resultIntent) {
-        return BaseSandriosActivity.ACTION_CANCEL == resultIntent.getIntExtra(RESPONSE_CODE_ARG, -1);
+        return BaseOjuCamActivity.ACTION_CANCEL == resultIntent.getIntExtra(RESPONSE_CODE_ARG, -1);
     }
 
     @Override
@@ -376,14 +373,14 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         Intent resultIntent = new Intent();
         if (view.getId() == R.id.confirm_media_result) {
-            resultIntent.putExtra(RESPONSE_CODE_ARG, BaseSandriosActivity.ACTION_CONFIRM);
+            resultIntent.putExtra(RESPONSE_CODE_ARG, BaseOjuCamActivity.ACTION_CONFIRM);
             resultIntent.putExtra(FILE_PATH_ARG, previewFilePath);
         } else if (view.getId() == R.id.re_take_media) {
             deleteMediaFile();
-            resultIntent.putExtra(RESPONSE_CODE_ARG, BaseSandriosActivity.ACTION_RETAKE);
+            resultIntent.putExtra(RESPONSE_CODE_ARG, BaseOjuCamActivity.ACTION_RETAKE);
         } else if (view.getId() == R.id.cancel_media_action) {
             deleteMediaFile();
-            resultIntent.putExtra(RESPONSE_CODE_ARG, BaseSandriosActivity.ACTION_CANCEL);
+            resultIntent.putExtra(RESPONSE_CODE_ARG, BaseOjuCamActivity.ACTION_CANCEL);
         }
         setResult(RESULT_OK, resultIntent);
         finish();

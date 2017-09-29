@@ -12,9 +12,6 @@ import com.alium.ojucamera.internal.utils.Size;
 
 import java.io.File;
 
-/**
- * Created by Arpit Gandhi on 8/14/16.
- */
 public interface CameraManager<CameraId, SurfaceListener> {
 
     void initializeCameraManager(ConfigurationProvider configurationProvider, Context context);

@@ -6,9 +6,7 @@ import android.view.View;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.utils.Size;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
+
 public interface CameraView {
 
     Activity getActivity();

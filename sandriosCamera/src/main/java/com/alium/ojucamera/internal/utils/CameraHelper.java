@@ -21,12 +21,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-
-/**
- * Created by Arpit Gandhi on 7/6/16.
- * <p/>
- * Class with some common methods to work with camera.
- */
 public final class CameraHelper {
 
     public final static String TAG = "CameraHelper";

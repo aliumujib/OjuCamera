@@ -30,11 +30,7 @@ import com.alium.ojucamera.internal.utils.Size;
 import com.alium.ojucamera.internal.utils.Utils;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-/**
- * Created by Arpit Gandhi on 12/1/16.
- */
-
-public abstract class BaseSandriosActivity<CameraId> extends SandriosCameraActivity<CameraId>
+public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<CameraId>
         implements
         RecordButton.RecordButtonListener,
         FlashSwitchView.FlashModeSwitchListener,

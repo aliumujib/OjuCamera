@@ -22,9 +22,6 @@ import com.alium.ojucamera.internal.utils.Size;
 
 import java.io.File;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 @TargetApi(Build.VERSION_CODES.N)
 public class Camera2ControllerAPI24 implements CameraController<String>,
         CameraOpenListener<Integer, SurfaceHolder.Callback>,

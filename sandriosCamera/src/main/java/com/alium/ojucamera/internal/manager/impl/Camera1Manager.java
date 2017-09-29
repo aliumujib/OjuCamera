@@ -26,9 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by Arpit Gandhi on 8/14/16.
- */
 @SuppressWarnings("deprecation")
 public class Camera1Manager extends BaseCameraManager<Integer, SurfaceHolder.Callback>
         implements SurfaceHolder.Callback, Camera.PictureCallback {

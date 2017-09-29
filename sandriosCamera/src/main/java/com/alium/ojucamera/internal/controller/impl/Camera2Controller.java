@@ -22,9 +22,6 @@ import com.alium.ojucamera.internal.utils.Size;
 
 import java.io.File;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Camera2Controller implements CameraController<String>,
         CameraOpenListener<String, TextureView.SurfaceTextureListener>,

@@ -15,9 +15,6 @@ import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.manager.CameraManager;
 import com.alium.ojucamera.internal.utils.Size;
 
-/**
- * Created by Arpit Gandhi on 8/14/16.
- */
 abstract class BaseCameraManager<CameraId, SurfaceListener>
         implements CameraManager<CameraId, SurfaceListener>, MediaRecorder.OnInfoListener {
 

@@ -7,9 +7,7 @@ import android.os.Build;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Arpit Gandhi on 12/1/16.
- */
+
 
 public class Size {
 

@@ -6,10 +6,6 @@ import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Arpit Gandhi on 12/1/16.
- */
-
 public class VideoQualityOption implements CharSequence {
 
     private String title;

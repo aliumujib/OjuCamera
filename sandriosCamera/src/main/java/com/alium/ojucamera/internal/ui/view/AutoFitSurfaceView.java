@@ -6,9 +6,6 @@ import android.support.annotation.NonNull;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 @SuppressWarnings("deprecation")
 @SuppressLint("ViewConstructor")
 public class AutoFitSurfaceView extends SurfaceView {

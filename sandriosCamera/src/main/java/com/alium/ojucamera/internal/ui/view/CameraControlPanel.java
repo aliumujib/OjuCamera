@@ -29,9 +29,6 @@ import com.alium.ojucamera.internal.utils.DateTimeUtils;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 public class CameraControlPanel extends RelativeLayout
         implements RecordButton.RecordButtonListener,
         MediaActionSwitchView.OnMediaActionStateChangeListener {

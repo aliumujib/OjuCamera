@@ -7,9 +7,6 @@ import com.alium.ojucamera.internal.manager.CameraManager;
 
 import java.io.File;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 public interface CameraController<CameraId> {
 
     void onCreate(Bundle savedInstanceState);

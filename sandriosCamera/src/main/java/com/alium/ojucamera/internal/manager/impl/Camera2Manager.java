@@ -46,9 +46,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by Arpit Gandhi on 8/9/16.
- */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public final class Camera2Manager extends BaseCameraManager<String, TextureView.SurfaceTextureListener>
         implements ImageReader.OnImageAvailableListener, TextureView.SurfaceTextureListener {

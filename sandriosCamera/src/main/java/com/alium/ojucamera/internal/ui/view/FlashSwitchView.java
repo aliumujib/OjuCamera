@@ -16,10 +16,6 @@ import com.alium.ojucamera.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
 public class FlashSwitchView extends ImageButton {
 
     public static final int FLASH_ON = 0;

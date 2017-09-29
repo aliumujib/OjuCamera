@@ -10,9 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-/**
- * Created by Arpit Gandhi on 7/6/16.
- */
+
 public class ImageSaver implements Runnable {
 
     private final static String TAG = "ImageSaver";

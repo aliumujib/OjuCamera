@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.alium.ojucamera.internal.SandriosCamera;
+import com.alium.ojucamera.internal.OjuCamera;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 
 /**
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.withPicker:
-                    new SandriosCamera(activity, CAPTURE_MEDIA)
+                    new OjuCamera(activity, CAPTURE_MEDIA)
                             //.setShowPickerType(CameraConfiguration.VIDEO)
                             .setVideoFileSize(20)
                             .setMediaAction(CameraConfiguration.MEDIA_ACTION_BOTH)
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                             .launchCamera();
                     break;
                 case R.id.withoutPicker:
-                    new SandriosCamera(activity, CAPTURE_MEDIA)
+                    new OjuCamera(activity, CAPTURE_MEDIA)
                             .setMediaAction(CameraConfiguration.MEDIA_ACTION_PHOTO)
                             .enableImageCropping(false)
                             .launchCamera();

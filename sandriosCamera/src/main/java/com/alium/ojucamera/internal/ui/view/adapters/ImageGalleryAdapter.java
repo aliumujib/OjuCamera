@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alium.ojucamera.R;
+import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
 
@@ -16,9 +17,6 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
-/**
- * Created by TedPark on 2016. 8. 30..
- */
 public class ImageGalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
 
     ArrayList<PickerTile> pickerTiles = new ArrayList<>();
@@ -44,7 +42,13 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder>
             }
         };
 
-        MediaRepository.sharedInstance.getAllMedia(context).subscribe(successConsumer, failuireConsumer);
+        if(type == CameraConfiguration.PHOTO_AND_VIDEO){
+            MediaRepository.sharedInstance.getAllMedia(context).subscribe(successConsumer, failuireConsumer);
+        }else if(type == CameraConfiguration.PHOTO){
+            MediaRepository.sharedInstance.getPhotos(context).subscribe(successConsumer, failuireConsumer);
+        }else if(type == CameraConfiguration.VIDEO){
+            MediaRepository.sharedInstance.getVideos(context).subscribe(successConsumer, failuireConsumer);
+        }
     }
 
     @Override

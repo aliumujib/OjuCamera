@@ -16,10 +16,6 @@ import com.alium.ojucamera.R;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by abdulmujibaliu on 9/28/17.
- */
-
 public class GalleryPanelButtonView extends ImageButton {
 
     public static final int ANCHORED = 0;

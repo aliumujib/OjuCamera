@@ -22,11 +22,7 @@ import com.alium.ojucamera.internal.ui.view.AspectFrameLayout;
 import com.alium.ojucamera.internal.utils.Size;
 import com.alium.ojucamera.internal.utils.Utils;
 
-/**
- * Created by Arpit Gandhi on 12/1/16.
- */
-
-abstract public class SandriosCameraActivity<CameraId> extends Activity
+abstract public class OjuCameraActivity<CameraId> extends Activity
         implements ConfigurationProvider, CameraView, SensorEventListener {
 
     protected AspectFrameLayout previewContainer;

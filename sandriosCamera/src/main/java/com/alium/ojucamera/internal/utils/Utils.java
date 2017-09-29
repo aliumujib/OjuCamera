@@ -9,9 +9,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 
-/**
- * Created by Arpit Gandhi on 7/18/16.
- */
+
 public class Utils {
 
     public static int getDeviceDefaultOrientation(Context context) {

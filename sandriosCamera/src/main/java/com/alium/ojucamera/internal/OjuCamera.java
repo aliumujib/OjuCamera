@@ -14,13 +14,10 @@ import com.alium.ojucamera.internal.utils.CameraHelper;
 
 import java.util.ArrayList;
 
-/**
- * Sandrios Camera Builder Class
- * Created by Arpit Gandhi on 7/6/16.
- */
-public class SandriosCamera {
 
-    private SandriosCamera mInstance = null;
+public class OjuCamera {
+
+    private OjuCamera mInstance = null;
     private Activity mActivity;
     private int requestCode;
     private int mediaAction = CameraConfiguration.MEDIA_ACTION_BOTH;
@@ -28,35 +25,29 @@ public class SandriosCamera {
     private boolean enableImageCrop = false;
     private long videoSize = -1;
 
-    /***
-     * Creates SandriosCamera instance with default configuration set to both.
-     *
-     * @param activity - fromList which request was invoked
-     * @param code     - request code which will return in onActivityForResult
-     */
-    public SandriosCamera(Activity activity, @IntRange(from = 0) int code) {
+    public OjuCamera(Activity activity, @IntRange(from = 0) int code) {
         mInstance = this;
         mActivity = activity;
         requestCode = code;
     }
 
-    public SandriosCamera setShowPickerType(int type) {
+    public OjuCamera setShowPickerType(int type) {
         this.type = type;
         return mInstance;
     }
 
 
-    public SandriosCamera setMediaAction(int mediaAction) {
+    public OjuCamera setMediaAction(int mediaAction) {
         this.mediaAction = mediaAction;
         return mInstance;
     }
 
-    public SandriosCamera enableImageCropping(boolean enableImageCrop) {
+    public OjuCamera enableImageCropping(boolean enableImageCrop) {
         this.enableImageCrop = enableImageCrop;
         return mInstance;
     }
 
-    public SandriosCamera setVideoFileSize(int fileSize) {
+    public OjuCamera setVideoFileSize(int fileSize) {
         this.videoSize = fileSize;
         return mInstance;
     }

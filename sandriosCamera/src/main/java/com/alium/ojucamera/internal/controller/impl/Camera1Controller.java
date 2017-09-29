@@ -20,10 +20,6 @@ import com.alium.ojucamera.internal.utils.Size;
 
 import java.io.File;
 
-/**
- * Created by Arpit Gandhi on 7/7/16.
- */
-
 @SuppressWarnings("deprecation")
 public class Camera1Controller implements CameraController<Integer>,
         CameraOpenListener<Integer, SurfaceHolder.Callback>, CameraPhotoListener, CameraCloseListener<Integer>, CameraVideoListener {
