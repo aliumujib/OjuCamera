@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.withPicker:
                     new OjuCamera(activity, CAPTURE_MEDIA)
-                            //.setShowPickerType(CameraConfiguration.VIDEO)
+                            .setShowPickerType(CameraConfiguration.PHOTO_AND_VIDEO)
                             .setVideoFileSize(20)
                             .setMediaAction(CameraConfiguration.MEDIA_ACTION_BOTH)
                             .enableImageCropping(true)

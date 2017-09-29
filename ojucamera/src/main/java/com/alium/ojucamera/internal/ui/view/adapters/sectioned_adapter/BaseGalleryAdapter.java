@@ -66,7 +66,7 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
 
     @Override
     public SubheaderHolder onCreateSubheaderViewHolder(ViewGroup parent, int viewType) {
-        return new SubheaderHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header, parent, false));
+        return new SubheaderHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.oju_lib_item_header, parent, false));
     }
 
     @Override

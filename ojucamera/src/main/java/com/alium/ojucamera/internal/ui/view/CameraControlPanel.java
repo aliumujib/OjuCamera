@@ -23,11 +23,17 @@ import android.widget.TextView;
 import com.alium.ojucamera.R;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.manager.listener.GalleryClickListener;
+import com.alium.ojucamera.internal.repository.MediaRepository;
+import com.alium.ojucamera.internal.ui.model.PickerTile;
 import com.alium.ojucamera.internal.ui.view.adapters.ImageGalleryAdapter;
 import com.alium.ojucamera.internal.utils.DateTimeUtils;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 public class CameraControlPanel extends RelativeLayout
         implements RecordButton.RecordButtonListener,
@@ -149,8 +155,30 @@ public class CameraControlPanel extends RelativeLayout
 
 
     public void postInit(int mediatype) {
-        imageGalleryAdapter = new ImageGalleryAdapter(context, mediatype);
+        imageGalleryAdapter = new ImageGalleryAdapter(context);
         anchoredRecyclerView.setAdapter(imageGalleryAdapter);
+
+        Consumer<List<PickerTile>> successConsumer = new Consumer<List<PickerTile>>() {
+            @Override
+            public void accept(@NonNull List<PickerTile> pickerTiles) throws Exception {
+                //Log.d(TAG, String.valueOf(pickerTiles.size()));
+                imageGalleryAdapter.addAll(pickerTiles);
+            }
+        };
+        Consumer<Throwable> failuireConsumer = new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                throwable.printStackTrace();
+            }
+        };
+
+        if (mediatype == CameraConfiguration.PHOTO_AND_VIDEO) {
+            MediaRepository.sharedInstance.getAllMedia(context).subscribe(successConsumer, failuireConsumer);
+        } else if (mediatype == CameraConfiguration.PHOTO) {
+            MediaRepository.sharedInstance.getPhotos(context).subscribe(successConsumer, failuireConsumer);
+        } else if (mediatype == CameraConfiguration.VIDEO) {
+            MediaRepository.sharedInstance.getVideos(context).subscribe(successConsumer, failuireConsumer);
+        }
 
         imageGalleryAdapter.setOnItemClickListener(new ImageGalleryAdapter.OnItemClickListener() {
             @Override

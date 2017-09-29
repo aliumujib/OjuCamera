@@ -24,6 +24,8 @@ android {
         abortOnError false
     }
 
+    resourcePrefix 'ojulib_'
+
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
         pickFirst 'org/joda/time/format/messages_en.properties'

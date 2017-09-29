@@ -25,7 +25,6 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
 
     public void bindGalleryItem(PickerTile pickerTile, final ImageGalleryAdapter.OnItemClickListener onItemClickListener, final int position){
         Uri uri = pickerTile.getImageUri();
-        Log.d("IMAGE PICK", pickerTile.getImageUri().toString());
         Glide.with(itemView.getContext())
                 .load(uri)
                 .thumbnail(0.1f)

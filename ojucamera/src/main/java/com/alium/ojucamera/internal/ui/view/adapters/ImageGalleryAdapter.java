@@ -12,6 +12,7 @@ import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -24,31 +25,13 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder>
     OnItemClickListener onItemClickListener;
     private String TAG = getClass().getSimpleName();
 
-    public ImageGalleryAdapter(Context context, int type) {
+    public ImageGalleryAdapter(Context context) {
         this.context = context;
+    }
 
-        Consumer<List<PickerTile>> successConsumer = new Consumer<List<PickerTile>>() {
-            @Override
-            public void accept(@NonNull List<PickerTile> pickerTiles) throws Exception {
-                Log.d(TAG, String.valueOf(pickerTiles.size()));
-                ImageGalleryAdapter.this.pickerTiles.addAll(pickerTiles);
-                notifyDataSetChanged();
-            }
-        };
-        Consumer<Throwable> failuireConsumer = new Consumer<Throwable>() {
-            @Override
-            public void accept(@NonNull Throwable throwable) throws Exception {
-                throwable.printStackTrace();
-            }
-        };
-
-        if(type == CameraConfiguration.PHOTO_AND_VIDEO){
-            MediaRepository.sharedInstance.getAllMedia(context).subscribe(successConsumer, failuireConsumer);
-        }else if(type == CameraConfiguration.PHOTO){
-            MediaRepository.sharedInstance.getPhotos(context).subscribe(successConsumer, failuireConsumer);
-        }else if(type == CameraConfiguration.VIDEO){
-            MediaRepository.sharedInstance.getVideos(context).subscribe(successConsumer, failuireConsumer);
-        }
+    public void addAll(Collection<PickerTile> pickerTiles){
+        this.pickerTiles.addAll(pickerTiles);
+        notifyDataSetChanged();
     }
 
     @Override

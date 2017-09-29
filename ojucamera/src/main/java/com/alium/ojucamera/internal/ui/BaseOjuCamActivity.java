@@ -234,7 +234,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
                 @Override
                 public void onPanelSlide(View panel, float slideOffset) {
                     cameraControlPanel.fadeViewsWithOffset(slideOffset);
-                    Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                    //Log.i(TAG, "onPanelSlide, offset " + slideOffset);
                 }
 
                 @Override
@@ -248,7 +248,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
                     if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED || newState == SlidingUpPanelLayout.PanelState.ANCHORED || newState == SlidingUpPanelLayout.PanelState.HIDDEN) {
                         hideSystemUI();
                     }
-                    Log.i(TAG, "onPanelStateChanged " + newState);
+                   // Log.i(TAG, "onPanelStateChanged " + newState);
                 }
             });
 
