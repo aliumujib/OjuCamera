@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.support.annotation.CallSuper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,12 @@ import java.util.List;
 
 public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<BaseGalleryAdapter.SubheaderHolder, GalleryViewHolder> {
 
+    private String TAG = getClass().getSimpleName();
+    List<PickerTile> pickerTileList = new ArrayList<>();
+
     public void addAll(List<PickerTile> pickerTiles) {
-        movieList.addAll(pickerTiles);
+        pickerTileList.addAll(pickerTiles);
+        Log.d(TAG, "Added: " + pickerTileList.size());
         notifyDataSetChanged();
     }
 
@@ -36,7 +41,6 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
         void onSubheaderClicked(int position);
     }
 
-    List<PickerTile> movieList = new ArrayList<>();
 
     OnItemClickListener onItemClickListener;
 
@@ -59,7 +63,6 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
         }
 
     }
-
 
 
     @Override
@@ -95,7 +98,7 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
 
     @Override
     public int getItemSize() {
-        return movieList.size();
+        return pickerTileList.size();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

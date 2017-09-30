@@ -18,6 +18,8 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
 
     ImageView iv_thumbnail;
 
+    private String TAG = getClass().getSimpleName();
+
     public GalleryViewHolder(View view) {
         super(view);
         iv_thumbnail = (ImageView) view.findViewById(R.id.image);

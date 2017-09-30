@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,10 +17,8 @@ import com.alium.ojucamera.R;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
-import com.alium.ojucamera.internal.ui.view.adapters.ImageGalleryAdapter;
 import com.alium.ojucamera.internal.ui.view.adapters.sectioned_adapter.GalleryAdapterByDecade;
 
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,9 +40,10 @@ public class MutipleItemSelectView extends LinearLayout {
     private RecyclerView mExpandedRecyclerView;
     private GalleryAdapterByDecade mSectionedRecyclerAdapter;
 
+    public String TAG = getClass().getSimpleName();
 
     private Comparator<PickerTile> movieComparator;
-    private List<PickerTile> imageGalleryAdapter = new ArrayList<>();
+    private List<PickerTile> pickerTileArrayList = new ArrayList<>();
 
     public MutipleItemSelectView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -58,15 +58,14 @@ public class MutipleItemSelectView extends LinearLayout {
     }
 
 
-    private void setUpAdapter(int mediatype) {
+    public void setUpAdapter(int mediatype) {
 
 
         Consumer<List<PickerTile>> successConsumer = new Consumer<List<PickerTile>>() {
             @Override
             public void accept(@NonNull List<PickerTile> pickerTiles) throws Exception {
-                //Log.d(TAG, String.valueOf(pickerTiles.size()));
-                setAdapterByDecade(imageGalleryAdapter);
-                mSectionedRecyclerAdapter.addAll(pickerTiles);
+                Log.d(TAG, String.valueOf(pickerTiles.size()));
+                sortItemsByDate(pickerTiles);
             }
         };
         Consumer<Throwable> failuireConsumer = new Consumer<Throwable>() {
@@ -75,6 +74,7 @@ public class MutipleItemSelectView extends LinearLayout {
                 throwable.printStackTrace();
             }
         };
+
 
         if (mediatype == CameraConfiguration.PHOTO_AND_VIDEO) {
             MediaRepository.sharedInstance.getAllMedia(getActivity()).subscribe(successConsumer, failuireConsumer);
@@ -87,7 +87,7 @@ public class MutipleItemSelectView extends LinearLayout {
 
     }
 
-    private void setAdapterByDecade(List<PickerTile> pickerTiles) {
+    private void sortItemsByDate(List<PickerTile> pickerTiles) {
         this.movieComparator = new Comparator<PickerTile>() {
             @Override
             public int compare(PickerTile o1, PickerTile o2) {
@@ -99,6 +99,7 @@ public class MutipleItemSelectView extends LinearLayout {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
         mExpandedRecyclerView.setLayoutManager(gridLayoutManager);
         mSectionedRecyclerAdapter.setGridLayoutManager(gridLayoutManager);
+        mExpandedRecyclerView.setAdapter(mSectionedRecyclerAdapter);
         mSectionedRecyclerAdapter.addAll(pickerTiles);
     }
 
@@ -118,7 +119,5 @@ public class MutipleItemSelectView extends LinearLayout {
         mMultiselectPicker = (LinearLayout) view.findViewById(R.id.multiselect_picker);
         mMultiSelectorToolbar = (Toolbar) view.findViewById(R.id.multi_selector_toolbar);
         mExpandedRecyclerView = (RecyclerView) view.findViewById(R.id.expanded_recycler_view);
-
-        setAdapterByDecade(new ArrayList<PickerTile>());
     }
 }
