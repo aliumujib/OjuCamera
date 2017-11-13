@@ -23,7 +23,7 @@ public class GalleryPanelButtonView extends ImageButton {
     public static final int EXPANDED = 2;
     @PanelState
     private int currentMode = COLLAPSED;
-    private GalleryPanelModeSwitchListener switchListener;
+    private GalleryPanelModeSwitchListener panelModeSwitchListener;
     private Drawable anchoredDrawable;
     private Drawable collapsedDrawable;
     private Drawable expandedDrawable;
@@ -65,8 +65,8 @@ public class GalleryPanelButtonView extends ImageButton {
         return currentMode;
     }
 
-    public void setFlashSwitchListener(@NonNull GalleryPanelModeSwitchListener switchListener) {
-        this.switchListener = switchListener;
+    public void setStateChangeListener(@NonNull GalleryPanelModeSwitchListener switchListener) {
+        this.panelModeSwitchListener = switchListener;
     }
 
     @Override
@@ -102,8 +102,8 @@ public class GalleryPanelButtonView extends ImageButton {
                 currentMode = EXPANDED;
             }
             setIcon();
-            if (switchListener != null) {
-                switchListener.onFlashModeChanged(currentMode);
+            if (panelModeSwitchListener != null) {
+                panelModeSwitchListener.onFlashModeChanged(currentMode);
             }
         }
     }

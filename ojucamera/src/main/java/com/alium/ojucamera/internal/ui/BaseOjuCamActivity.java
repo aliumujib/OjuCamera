@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -230,6 +229,10 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
             slidingUpPanelLayout = (SlidingUpPanelLayout) cameraControlPanel.findViewById(R.id.sliding_layout);
             slidingUpPanelBtnControl = (GalleryPanelButtonView) cameraControlPanel.findViewById(R.id.sliding_panel_ctrl_btn);
 
+            cameraControlPanel.hideMultipleItemSelectView();
+
+            slidingUpPanelBtnControl.setStateChangeListener();
+
             slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
                 @Override
                 public void onPanelSlide(View panel, float slideOffset) {
@@ -243,6 +246,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
                     updatePanelControlBtn(newState);
                     if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
                         showSystemUI();
+
                     }
 
                     if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED || newState == SlidingUpPanelLayout.PanelState.ANCHORED || newState == SlidingUpPanelLayout.PanelState.HIDDEN) {
@@ -271,14 +275,17 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
     private void updatePanelControlBtn(SlidingUpPanelLayout.PanelState state){
         slidingUpPanelBtnControl.setVisibility(View.VISIBLE);
         cameraControlPanel.hideRecyclerView();
+        cameraControlPanel.showMultipleItemSelectView();
         if(state == SlidingUpPanelLayout.PanelState.EXPANDED){
             slidingUpPanelBtnControl.setPanelState(GalleryPanelButtonView.EXPANDED);
             slidingUpPanelBtnControl.setVisibility(View.GONE);
         }else if(state == SlidingUpPanelLayout.PanelState.ANCHORED){
             cameraControlPanel.showRecyclerView();
+            cameraControlPanel.hideMultipleItemSelectView();
             slidingUpPanelBtnControl.setPanelState(GalleryPanelButtonView.ANCHORED);
         }else if(state == SlidingUpPanelLayout.PanelState.COLLAPSED){
             slidingUpPanelBtnControl.setPanelState(GalleryPanelButtonView.COLLAPSED);
+            cameraControlPanel.hideMultipleItemSelectView();
         }
     }
 

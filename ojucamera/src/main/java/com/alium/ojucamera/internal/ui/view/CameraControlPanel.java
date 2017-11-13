@@ -140,6 +140,10 @@ public class CameraControlPanel extends RelativeLayout
         anchoredRecyclerView.setVisibility(GONE);
     }
 
+    public void hideMultipleItemSelectView() {
+        multiSelectPicker.setVisibility(GONE);
+    }
+
     public void fadeViewsWithOffset(float slideOffset) {
         anchoredRecyclerView.animate().alpha(1.0f - slideOffset);
         if (slideOffset <= 0.2) {
@@ -153,6 +157,9 @@ public class CameraControlPanel extends RelativeLayout
         anchoredRecyclerView.setVisibility(VISIBLE);
     }
 
+    public void showMultipleItemSelectView() {
+        multiSelectPicker.setVisibility(VISIBLE);
+    }
 
     public void postInit(int mediatype) {
         imageGalleryAdapter = new ImageGalleryAdapter(context);
