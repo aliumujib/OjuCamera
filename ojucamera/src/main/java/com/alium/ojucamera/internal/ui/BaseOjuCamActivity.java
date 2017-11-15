@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +17,20 @@ import android.view.WindowManager;
 
 import com.alium.ojucamera.R;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
+import com.alium.ojucamera.internal.manager.listener.GalleryClickListener;
 import com.alium.ojucamera.internal.ui.model.PhotoQualityOption;
 import com.alium.ojucamera.internal.ui.model.VideoQualityOption;
 import com.alium.ojucamera.internal.ui.preview.PreviewActivity;
 import com.alium.ojucamera.internal.ui.view.CameraControlPanel;
 import com.alium.ojucamera.internal.ui.view.CameraSwitchView;
 import com.alium.ojucamera.internal.ui.view.FlashSwitchView;
-import com.alium.ojucamera.internal.manager.listener.GalleryClickListener;
 import com.alium.ojucamera.internal.ui.view.GalleryPanelButtonView;
 import com.alium.ojucamera.internal.ui.view.MediaActionSwitchView;
 import com.alium.ojucamera.internal.ui.view.RecordButton;
+import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorRecyclerManager;
+import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorv2;
 import com.alium.ojucamera.internal.utils.Size;
 import com.alium.ojucamera.internal.utils.Utils;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<CameraId>
         implements
@@ -64,11 +67,13 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
     protected int newQuality = -1;
     private CameraControlPanel cameraControlPanel;
     private AlertDialog settingsDialog;
-    protected SlidingUpPanelLayout slidingUpPanelLayout;
 
     @CameraConfiguration.FlashMode
     protected int flashMode = CameraConfiguration.FLASH_MODE_AUTO;
     private GalleryPanelButtonView slidingUpPanelBtnControl;
+    private BottomSheetBehaviorv2<View> mBehavior;
+    private View mBottomSheet;
+    private CoordinatorLayout mCordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +107,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
 
         cameraControlPanel.lockControls();
         cameraControlPanel.allowRecord(false);
-        cameraControlPanel.showPicker(showPicker);
+        //cameraControlPanel.showPicker(showPicker);
     }
 
     @Override
@@ -226,64 +231,104 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
             cameraControlPanel.setPickerItemClickListener(this);
             cameraControlPanel.shouldShowCrop(enableImageCrop);
 
-            slidingUpPanelLayout = (SlidingUpPanelLayout) cameraControlPanel.findViewById(R.id.sliding_layout);
             slidingUpPanelBtnControl = (GalleryPanelButtonView) cameraControlPanel.findViewById(R.id.sliding_panel_ctrl_btn);
 
             cameraControlPanel.hideMultipleItemSelectView();
 
-            slidingUpPanelBtnControl.setStateChangeListener();
-
-            slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+         /*   slidingUpPanelBtnControl.setStateChangeListener(new GalleryPanelButtonView.GalleryPanelModeSwitchListener() {
                 @Override
-                public void onPanelSlide(View panel, float slideOffset) {
-                    cameraControlPanel.fadeViewsWithOffset(slideOffset);
-                    //Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                public void onStateChanged(int mode) {
+                    if(mode == GalleryPanelButtonView.ANCHORED){
+                        updatePanelControlBtn(SlidingUpPanelLayout.PanelState.ANCHORED);
+                    }else if(mode == GalleryPanelButtonView.COLLAPSED){
+                        updatePanelControlBtn(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                    }else {
+                        updatePanelControlBtn(SlidingUpPanelLayout.PanelState.EXPANDED);
+                    }
                 }
+            });*/
 
+            mCordinatorLayout = (CoordinatorLayout) cameraControlPanel.findViewById(R.id.coordinatorLayout);
+            mCordinatorLayout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+            mBottomSheet = cameraControlPanel.findViewById(R.id.dragView);
+            mBehavior = BottomSheetBehaviorv2.from(mBottomSheet);
+            //mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            mBehavior.setBottomSheetCallback(new BottomSheetBehaviorv2.BottomSheetCallback() {
                 @Override
-                public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    // React to state change
                     prepareforAnimation();
                     updatePanelControlBtn(newState);
-                    if (newState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    if (newState == BottomSheetBehaviorv2.STATE_EXPANDED) {
                         showSystemUI();
 
                     }
 
-                    if (newState == SlidingUpPanelLayout.PanelState.COLLAPSED || newState == SlidingUpPanelLayout.PanelState.ANCHORED || newState == SlidingUpPanelLayout.PanelState.HIDDEN) {
+                    if (newState == BottomSheetBehaviorv2.STATE_COLLAPSED || newState == BottomSheetBehaviorv2.STATE_HIDDEN) {
                         hideSystemUI();
                     }
-                   // Log.i(TAG, "onPanelStateChanged " + newState);
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                    // React to dragging events
+                    cameraControlPanel.fadeViewsWithOffset(slideOffset);
                 }
             });
 
-            slidingUpPanelLayout.setFadeOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                }
-            });
+            cameraControlPanel.showRecyclerView();
+
+
+            //helper to rule scrolls
+            BottomSheetBehaviorRecyclerManager manager = new BottomSheetBehaviorRecyclerManager(mCordinatorLayout, mBehavior, mBottomSheet);
+            manager.addControl(cameraControlPanel.getAnchoredRecyclerView());
+            manager.addControl(cameraControlPanel.getExpandedRecyclerView());
+            manager.create();
+
+
+//            slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+//                @Override
+//                public void onPanelSlide(View panel, float slideOffset) {
+//                    cameraControlPanel.fadeViewsWithOffset(slideOffset);
+//                    //Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+//                }
+//
+//                @Override
+//                public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+//
+//                   // Log.i(TAG, "onPanelStateChanged " + newState);
+//                }
+//            });
+//
+//            slidingUpPanelLayout.setFadeOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+//                }
+//            });
         }
         return cameraControlPanel;
     }
 
-    protected void prepareforAnimation(){
+    protected void prepareforAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(slidingUpPanelLayout);
+            TransitionManager.beginDelayedTransition(mCordinatorLayout);
         }
     }
 
-    private void updatePanelControlBtn(SlidingUpPanelLayout.PanelState state){
+    private void updatePanelControlBtn(int state) {
         slidingUpPanelBtnControl.setVisibility(View.VISIBLE);
         cameraControlPanel.hideRecyclerView();
         cameraControlPanel.showMultipleItemSelectView();
-        if(state == SlidingUpPanelLayout.PanelState.EXPANDED){
+        if (state == BottomSheetBehaviorv2.STATE_EXPANDED) {
             slidingUpPanelBtnControl.setPanelState(GalleryPanelButtonView.EXPANDED);
             slidingUpPanelBtnControl.setVisibility(View.GONE);
-        }else if(state == SlidingUpPanelLayout.PanelState.ANCHORED){
+        } else if (state == BottomSheetBehaviorv2.STATE_COLLAPSED) {
             cameraControlPanel.showRecyclerView();
             cameraControlPanel.hideMultipleItemSelectView();
             slidingUpPanelBtnControl.setPanelState(GalleryPanelButtonView.ANCHORED);
-        }else if(state == SlidingUpPanelLayout.PanelState.COLLAPSED){
+        } else if (state == BottomSheetBehaviorv2.STATE_HIDDEN) {
             slidingUpPanelBtnControl.setPanelState(GalleryPanelButtonView.COLLAPSED);
             cameraControlPanel.hideMultipleItemSelectView();
         }

@@ -37,8 +37,8 @@ public class MediaRepository implements IMediaRepository {
             protected void subscribeActual(Observer<? super List<PickerTile>> observer) {
                 Cursor imageCursor = null;
                 try {
-                    final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.ImageColumns.ORIENTATION};
-                    final String orderBy = MediaStore.Images.Media.DATE_ADDED + " DESC";
+                    final String[] columns = {MediaStore.Images.Media.DATA, MediaStore.Images.ImageColumns.ORIENTATION, MediaStore.Images.Media.DATE_MODIFIED};
+                    final String orderBy = MediaStore.Images.Media.DATE_MODIFIED + " DESC";
 
                     imageCursor = context.getApplicationContext().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null, null, orderBy);
                     if (imageCursor != null) {
@@ -47,7 +47,7 @@ public class MediaRepository implements IMediaRepository {
                         while (imageCursor.moveToNext()) {
                             String imageLocation = imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
                             File imageFile = new File(imageLocation);
-                            PickerTile pickerTile = new PickerTile(Uri.fromFile(imageFile), new LocalDateTime(imageCursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED) * 1000L), false);
+                            PickerTile pickerTile = new PickerTile(Uri.fromFile(imageFile), new LocalDateTime(imageCursor.getLong(imageCursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)) * 1000L), false);
                             pickerTiles.add(pickerTile);
                             count++;
                         }
@@ -73,8 +73,8 @@ public class MediaRepository implements IMediaRepository {
             protected void subscribeActual(Observer<? super List<PickerTile>> observer) {
                 Cursor videoCursor = null;
                 try {
-                    final String[] columns = {MediaStore.Video.VideoColumns.DATA};
-                    final String orderBy = MediaStore.Video.Media.DATE_ADDED + " DESC";
+                    final String[] columns = {MediaStore.Video.VideoColumns.DATA, MediaStore.Video.VideoColumns.DATE_MODIFIED};
+                    final String orderBy = MediaStore.Video.Media.DATE_MODIFIED + " DESC";
 
                     videoCursor = context.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, columns, null, null, orderBy);
                     if (videoCursor != null) {
@@ -83,7 +83,7 @@ public class MediaRepository implements IMediaRepository {
                             String videoLocation;
                             videoLocation = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Video.Media.DATA));
                             File videoFile = new File(videoLocation);
-                            pickerTiles.add(new PickerTile(Uri.fromFile(videoFile), new LocalDateTime(videoCursor.getColumnIndex(MediaStore.Video.Media.DATE_ADDED) * 1000L), true));
+                            pickerTiles.add(new PickerTile(Uri.fromFile(videoFile), new LocalDateTime(videoCursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED) * 1000L), true));
                             count++;
                         }
                         observer.onNext(pickerTiles);

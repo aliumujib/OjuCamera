@@ -27,6 +27,9 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
+
+        maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
+
         maven {
             url "https://repo.commonsware.com.s3.amazonaws.com"
         }

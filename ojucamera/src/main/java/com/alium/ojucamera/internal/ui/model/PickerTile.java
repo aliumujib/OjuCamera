@@ -3,6 +3,7 @@ package com.alium.ojucamera.internal.ui.model;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.joda.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class PickerTile {
     protected final Uri imageUri;
     private LocalDateTime dateCreated;
     private boolean isVideo;
-
+private String TAG = getClass().getSimpleName();
 
     public boolean isVideo() {
         return isVideo;
@@ -23,6 +24,7 @@ public class PickerTile {
     public PickerTile(@NonNull Uri imageUri, LocalDateTime dateCreated, boolean isVideo) {
         this.imageUri = imageUri;
         this.dateCreated = dateCreated;
+        Log.d(TAG, dateCreated.toString());
         this.isVideo = isVideo;
     }
 

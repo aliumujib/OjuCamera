@@ -42,7 +42,7 @@ public class GalleryPanelButtonView extends ImageButton {
 
     private void init() {
         setBackgroundColor(Color.TRANSPARENT);
-        setOnClickListener(new GalleryPanelButtonClickListener());
+        //setOnClickListener(new GalleryPanelButtonClickListener());
         setIcon();
     }
 
@@ -87,7 +87,7 @@ public class GalleryPanelButtonView extends ImageButton {
     }
 
     public interface GalleryPanelModeSwitchListener {
-        void onFlashModeChanged(@PanelState int mode);
+        void onStateChanged(@PanelState int mode);
     }
 
     private class GalleryPanelButtonClickListener implements OnClickListener {
@@ -103,7 +103,7 @@ public class GalleryPanelButtonView extends ImageButton {
             }
             setIcon();
             if (panelModeSwitchListener != null) {
-                panelModeSwitchListener.onFlashModeChanged(currentMode);
+                panelModeSwitchListener.onStateChanged(currentMode);
             }
         }
     }

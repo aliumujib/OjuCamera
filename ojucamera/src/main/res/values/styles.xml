@@ -20,7 +20,6 @@
 
     <style name="ThemeFullscreen" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
     </style>
 
     <declare-styleable name="CropperView">

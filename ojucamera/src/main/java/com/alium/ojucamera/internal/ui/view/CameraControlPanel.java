@@ -11,12 +11,14 @@ import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -88,10 +90,11 @@ public class CameraControlPanel extends RelativeLayout
         }
     }
 
+
     private void init() {
         hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
-        LayoutInflater.from(context).inflate(R.layout.camera_control_panel_layout, this);
+        LayoutInflater.from(context).inflate(R.layout.ojulib_camera_control_panel_layout, this);
         setBackgroundColor(Color.TRANSPARENT);
         settingsButton = (ImageButton) findViewById(R.id.settings_view);
         pickFromGalleryButton = (ImageButton) findViewById(R.id.gallery_pick_button);
@@ -102,9 +105,7 @@ public class CameraControlPanel extends RelativeLayout
         recordDurationText = (TextView) findViewById(R.id.record_duration_text);
         recordSizeText = (TextView) findViewById(R.id.record_size_mb_text);
         anchoredRecyclerView = (RecyclerView) findViewById(R.id.anchored_recycler_view);
-        multiSelectPicker = (MutipleItemSelectView) findViewById(R.id.multi_selector_view);
-
-
+        multiSelectPicker = (MutipleItemSelectView) findViewById(R.id.multiselect_picker_view);
         anchoredRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         cameraSwitchView.setOnCameraTypeChangeListener(onCameraTypeChangeListener);
         mediaActionSwitchView.setOnMediaActionStateChangeListener(this);
@@ -156,6 +157,15 @@ public class CameraControlPanel extends RelativeLayout
     public void showRecyclerView() {
         anchoredRecyclerView.setVisibility(VISIBLE);
     }
+
+    public RecyclerView getAnchoredRecyclerView() {
+        return anchoredRecyclerView;
+    }
+
+    public RecyclerView getExpandedRecyclerView() {
+        return multiSelectPicker.getmExpandedRecyclerView();
+    }
+
 
     public void showMultipleItemSelectView() {
         multiSelectPicker.setVisibility(VISIBLE);

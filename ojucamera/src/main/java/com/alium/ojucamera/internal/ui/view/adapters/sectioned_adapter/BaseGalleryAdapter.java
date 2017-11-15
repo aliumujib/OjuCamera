@@ -27,12 +27,12 @@ import java.util.List;
 public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<BaseGalleryAdapter.SubheaderHolder, GalleryViewHolder> {
 
     private String TAG = getClass().getSimpleName();
-    List<PickerTile> pickerTileList = new ArrayList<>();
+  protected   List<PickerTile> pickerTileList = new ArrayList<>();
 
     public void addAll(List<PickerTile> pickerTiles) {
         pickerTileList.addAll(pickerTiles);
         Log.d(TAG, "Added: " + pickerTileList.size());
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     public interface OnItemClickListener {
@@ -40,7 +40,6 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
 
         void onSubheaderClicked(int position);
     }
-
 
     OnItemClickListener onItemClickListener;
 
@@ -56,10 +55,10 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
             this.mSubheaderText = (TextView) itemView.findViewById(R.id.subheaderText);
             this.mArrow = (ImageView) itemView.findViewById(R.id.arrow);
 
-            if (meduiumTypeface == null) {
+           /* if (meduiumTypeface == null) {
                 meduiumTypeface = Typeface.createFromAsset(itemView.getContext().getAssets(), "Roboto-Medium.ttf");
-            }
-            this.mSubheaderText.setTypeface(meduiumTypeface);
+                            this.mSubheaderText.setTypeface(meduiumTypeface);
+            }*/
         }
 
     }
@@ -67,7 +66,7 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
 
     @Override
     public GalleryViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
-        return new GalleryViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false));
+        return new GalleryViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.ojulib_image_item_big, parent, false));
     }
 
     @Override
@@ -80,17 +79,13 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
     public void onBindSubheaderViewHolder(final SubheaderHolder subheaderHolder, int nextItemPosition) {
 
         boolean isSectionExpanded = isSectionExpanded(getSectionIndex(subheaderHolder.getAdapterPosition()));
-
-        if (isSectionExpanded) {
-            subheaderHolder.mArrow.setImageDrawable(ContextCompat.getDrawable(subheaderHolder.itemView.getContext(), R.drawable.ic_keyboard_arrow_up_black_24dp));
-        } else {
-            subheaderHolder.mArrow.setImageDrawable(ContextCompat.getDrawable(subheaderHolder.itemView.getContext(), R.drawable.ic_keyboard_arrow_down_black_24dp));
-        }
-
+        subheaderHolder.mArrow.setImageDrawable(null);
         subheaderHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onSubheaderClicked(subheaderHolder.getAdapterPosition());
+                if(onItemClickListener!=null){
+                    onItemClickListener.onSubheaderClicked(subheaderHolder.getAdapterPosition());
+                }
             }
         });
 

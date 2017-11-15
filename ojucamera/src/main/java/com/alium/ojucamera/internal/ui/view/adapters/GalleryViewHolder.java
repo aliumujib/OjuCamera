@@ -16,7 +16,7 @@ import com.alium.ojucamera.internal.ui.model.PickerTile;
  */
 public class GalleryViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView iv_thumbnail;
+    public ImageView iv_thumbnail;
 
     private String TAG = getClass().getSimpleName();
 
@@ -29,7 +29,7 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
         Uri uri = pickerTile.getImageUri();
         Glide.with(itemView.getContext())
                 .load(uri)
-                .thumbnail(0.1f)
+                //.thumbnail(0.1f)
                 .dontAnimate()
                 .centerCrop()
                 .placeholder(ContextCompat.getDrawable(itemView.getContext(), R.drawable.ic_gallery))

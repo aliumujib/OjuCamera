@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +44,7 @@ public class MutipleItemSelectView extends LinearLayout {
 
     public String TAG = getClass().getSimpleName();
 
-    private Comparator<PickerTile> movieComparator;
+    private Comparator<PickerTile> mediaComparator;
     private List<PickerTile> pickerTileArrayList = new ArrayList<>();
 
     public MutipleItemSelectView(Context context, @Nullable AttributeSet attrs) {
@@ -57,6 +59,9 @@ public class MutipleItemSelectView extends LinearLayout {
         setUpAdapter(CameraConfiguration.PHOTO_AND_VIDEO);
     }
 
+    public RecyclerView getmExpandedRecyclerView() {
+        return mExpandedRecyclerView;
+    }
 
     public void setUpAdapter(int mediatype) {
 
@@ -88,14 +93,15 @@ public class MutipleItemSelectView extends LinearLayout {
     }
 
     private void sortItemsByDate(List<PickerTile> pickerTiles) {
-        this.movieComparator = new Comparator<PickerTile>() {
+        this.mediaComparator = new Comparator<PickerTile>() {
             @Override
             public int compare(PickerTile o1, PickerTile o2) {
-                return o1.getDateCreated().getDayOfYear() - o2.getDateCreated().getDayOfYear();
+                return o2.getDateCreated().getDayOfYear() - o1.getDateCreated().getDayOfYear();
             }
         };
-        Collections.sort(pickerTiles, movieComparator);
-        mSectionedRecyclerAdapter = new GalleryAdapterByDecade();
+        Collections.sort(pickerTiles, mediaComparator);
+        Log.d(TAG, "AFTER SORT " +String.valueOf(pickerTiles.size()));
+        mSectionedRecyclerAdapter = new GalleryAdapterByDecade(pickerTiles);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
         mExpandedRecyclerView.setLayoutManager(gridLayoutManager);
         mSectionedRecyclerAdapter.setGridLayoutManager(gridLayoutManager);
@@ -119,5 +125,16 @@ public class MutipleItemSelectView extends LinearLayout {
         mMultiselectPicker = (LinearLayout) view.findViewById(R.id.multiselect_picker);
         mMultiSelectorToolbar = (Toolbar) view.findViewById(R.id.multi_selector_toolbar);
         mExpandedRecyclerView = (RecyclerView) view.findViewById(R.id.expanded_recycler_view);
+
+        if(getActivity() instanceof AppCompatActivity){
+            ((AppCompatActivity)getActivity()).setSupportActionBar(mMultiSelectorToolbar);
+            ActionBar actionBar;
+            if((actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar())!=null){
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setTitle("Pick Photos");
+            }
+        }
+
+
     }
 }

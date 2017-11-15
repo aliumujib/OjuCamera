@@ -6,17 +6,31 @@ import android.view.View;
 
 import com.alium.ojucamera.internal.ui.model.PickerTile;
 import com.alium.ojucamera.internal.ui.view.adapters.GalleryViewHolder;
+import com.alium.ojucamera.internal.utils.DateTimeUtils;
+
+import org.joda.time.Duration;
+import org.joda.time.LocalDateTime;
+import org.joda.time.Period;
+
+import java.util.List;
 
 /**
  * @author Vladislav Zhukov (https://github.com/zhukic)
+ * @Override public boolean onPlaceSubheaderBetweenItems(int position) {
+ * final Movie movie = movieList.get(position);
+ * final Movie nextMovie = movieList.get(position + 1);
+ * <p>
+ * return movie.getYear() / 10 != nextMovie.getYear() / 10;
+ * }
  */
 
 public class GalleryAdapterByDecade extends BaseGalleryAdapter {
 
     private String TAG = getClass().getSimpleName();
 
-    public GalleryAdapterByDecade() {
+    public GalleryAdapterByDecade(List<PickerTile> pickerTiles) {
         super();
+        this.pickerTileList = pickerTiles;
     }
 
     @Override
@@ -24,8 +38,13 @@ public class GalleryAdapterByDecade extends BaseGalleryAdapter {
         final PickerTile movie = pickerTileList.get(position);
         final PickerTile nextMovie = pickerTileList.get(position + 1);
 
-        return movie.getDateCreated().getDayOfYear() == nextMovie.getDateCreated().getDayOfYear();
+        boolean shouldPlace = movie.getDateCreated().getDayOfYear()  != nextMovie.getDateCreated().getDayOfYear();
+
+        Log.d(TAG, "Should Place: " + shouldPlace);
+
+        return shouldPlace;
     }
+
 
     @Override
     public void onBindItemViewHolder(final GalleryViewHolder holder, final int position) {
@@ -43,8 +62,8 @@ public class GalleryAdapterByDecade extends BaseGalleryAdapter {
     @Override
     public void onBindSubheaderViewHolder(SubheaderHolder subheaderHolder, int nextItemPosition) {
         super.onBindSubheaderViewHolder(subheaderHolder, nextItemPosition);
-        final PickerTile nextMovie = pickerTileList.get(nextItemPosition);
-        String decade = DateUtils.getRelativeTimeSpanString(nextMovie.getDateCreated().getMillisOfDay()).toString();
-        subheaderHolder.mSubheaderText.setText(decade);
+        final PickerTile nextMovie = pickerTileList.get(subheaderHolder.getAdapterPosition());
+        String date = DateTimeUtils.timeAgo(nextMovie.getDateCreated().getMillisOfSecond());
+        subheaderHolder.mSubheaderText.setText(date);
     }
 }

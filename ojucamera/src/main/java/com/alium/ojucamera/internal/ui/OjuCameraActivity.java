@@ -1,6 +1,5 @@
 package com.alium.ojucamera.internal.ui;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,21 +7,22 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.alium.ojucamera.R;
-import com.alium.ojucamera.internal.configuration.ConfigurationProvider;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
+import com.alium.ojucamera.internal.configuration.ConfigurationProvider;
 import com.alium.ojucamera.internal.controller.CameraController;
 import com.alium.ojucamera.internal.controller.view.CameraView;
 import com.alium.ojucamera.internal.ui.view.AspectFrameLayout;
 import com.alium.ojucamera.internal.utils.Size;
 import com.alium.ojucamera.internal.utils.Utils;
 
-abstract public class OjuCameraActivity<CameraId> extends Activity
+abstract public class OjuCameraActivity<CameraId> extends AppCompatActivity
         implements ConfigurationProvider, CameraView, SensorEventListener {
 
     protected AspectFrameLayout previewContainer;
