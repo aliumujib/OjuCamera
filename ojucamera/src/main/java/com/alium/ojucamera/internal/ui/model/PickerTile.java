@@ -15,7 +15,8 @@ public class PickerTile {
     protected final Uri imageUri;
     private LocalDateTime dateCreated;
     private boolean isVideo;
-private String TAG = getClass().getSimpleName();
+    private String TAG = getClass().getSimpleName();
+
 
     public boolean isVideo() {
         return isVideo;

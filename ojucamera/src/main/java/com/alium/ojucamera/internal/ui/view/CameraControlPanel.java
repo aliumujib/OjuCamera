@@ -178,11 +178,10 @@ public class CameraControlPanel extends RelativeLayout
         Consumer<List<PickerTile>> successConsumer = new Consumer<List<PickerTile>>() {
             @Override
             public void accept(@NonNull List<PickerTile> pickerTiles) throws Exception {
-                //Log.d(TAG, String.valueOf(pickerTiles.size()));
                 imageGalleryAdapter.addAll(pickerTiles);
             }
         };
-        Consumer<Throwable> failuireConsumer = new Consumer<Throwable>() {
+        Consumer<Throwable> failureConsumer = new Consumer<Throwable>() {
             @Override
             public void accept(@NonNull Throwable throwable) throws Exception {
                 throwable.printStackTrace();
@@ -190,11 +189,11 @@ public class CameraControlPanel extends RelativeLayout
         };
 
         if (mediatype == CameraConfiguration.PHOTO_AND_VIDEO) {
-            MediaRepository.sharedInstance.getAllMedia(context).subscribe(successConsumer, failuireConsumer);
+            MediaRepository.sharedInstance.getAllMedia(context).subscribe(successConsumer, failureConsumer);
         } else if (mediatype == CameraConfiguration.PHOTO) {
-            MediaRepository.sharedInstance.getPhotos(context).subscribe(successConsumer, failuireConsumer);
+            MediaRepository.sharedInstance.getPhotos(context).subscribe(successConsumer, failureConsumer);
         } else if (mediatype == CameraConfiguration.VIDEO) {
-            MediaRepository.sharedInstance.getVideos(context).subscribe(successConsumer, failuireConsumer);
+            MediaRepository.sharedInstance.getVideos(context).subscribe(successConsumer, failureConsumer);
         }
 
         imageGalleryAdapter.setOnItemClickListener(new ImageGalleryAdapter.OnItemClickListener() {
@@ -301,6 +300,7 @@ public class CameraControlPanel extends RelativeLayout
 
     public void setPickerItemClickListener(PickerItemClickListener pickerItemClickListener) {
         this.pickerItemClickListener = pickerItemClickListener;
+        this.multiSelectPicker.setPickerItemClickListener(pickerItemClickListener);
     }
 
     @Override

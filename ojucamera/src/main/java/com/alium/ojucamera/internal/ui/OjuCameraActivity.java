@@ -84,7 +84,7 @@ abstract public class OjuCameraActivity<CameraId> extends AppCompatActivity
 
         hideSystemUI();
 
-        setContentView(R.layout.generic_camera_layout);
+        setContentView(R.layout.oju_lib_generic_camera_layout);
 
         previewContainer = (AspectFrameLayout) findViewById(R.id.previewContainer);
         userContainer = (ViewGroup) findViewById(R.id.userContainer);

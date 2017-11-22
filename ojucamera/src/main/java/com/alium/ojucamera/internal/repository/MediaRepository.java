@@ -83,7 +83,7 @@ public class MediaRepository implements IMediaRepository {
                             String videoLocation;
                             videoLocation = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Video.Media.DATA));
                             File videoFile = new File(videoLocation);
-                            pickerTiles.add(new PickerTile(Uri.fromFile(videoFile), new LocalDateTime(videoCursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED) * 1000L), true));
+                            pickerTiles.add(new PickerTile(Uri.fromFile(videoFile), new LocalDateTime(videoCursor.getLong(videoCursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED)) * 1000L), true));
                             count++;
                         }
                         observer.onNext(pickerTiles);

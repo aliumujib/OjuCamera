@@ -19,6 +19,7 @@ import com.alium.ojucamera.R;
 import com.alium.ojucamera.internal.configuration.CameraConfiguration;
 import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
+import com.alium.ojucamera.internal.ui.view.adapters.sectioned_adapter.BaseGalleryAdapter;
 import com.alium.ojucamera.internal.ui.view.adapters.sectioned_adapter.GalleryAdapterByDecade;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class MutipleItemSelectView extends LinearLayout {
 
     private Comparator<PickerTile> mediaComparator;
     private List<PickerTile> pickerTileArrayList = new ArrayList<>();
+    private CameraControlPanel.PickerItemClickListener pickerItemClickListener;
 
     public MutipleItemSelectView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -92,6 +94,10 @@ public class MutipleItemSelectView extends LinearLayout {
 
     }
 
+    public void setPickerItemClickListener(CameraControlPanel.PickerItemClickListener pickerItemClickListener) {
+        this.pickerItemClickListener = pickerItemClickListener;
+    }
+
     private void sortItemsByDate(List<PickerTile> pickerTiles) {
         this.mediaComparator = new Comparator<PickerTile>() {
             @Override
@@ -105,6 +111,17 @@ public class MutipleItemSelectView extends LinearLayout {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
         mExpandedRecyclerView.setLayoutManager(gridLayoutManager);
         mSectionedRecyclerAdapter.setGridLayoutManager(gridLayoutManager);
+        mSectionedRecyclerAdapter.setOnItemClickListener(new BaseGalleryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(PickerTile tile) {
+                pickerItemClickListener.onItemClick(tile.getImageUri());
+            }
+
+            @Override
+            public void onSubheaderClicked(int position) {
+
+            }
+        });
         mExpandedRecyclerView.setAdapter(mSectionedRecyclerAdapter);
         mSectionedRecyclerAdapter.addAll(pickerTiles);
     }

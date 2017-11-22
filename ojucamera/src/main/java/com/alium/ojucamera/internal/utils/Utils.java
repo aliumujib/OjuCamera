@@ -3,9 +3,12 @@ package com.alium.ojucamera.internal.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Surface;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 
@@ -46,6 +49,29 @@ public class Utils {
         Resources resources = context.getResources();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, resources.getDisplayMetrics());
         return (int) px;
+    }
+
+    public static boolean isPortrait(Context context) {
+        Configuration config = context.getResources().getConfiguration();
+        return config.orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    public static boolean hasNavigationBar(Context context) {
+        if (Build.VERSION.SDK_INT < 19) return false; // could have but won't be translucent
+        return !ViewConfiguration.get(context).hasPermanentMenuKey();
+    }
+
+    public static int getNavigationBarHeight(Context context) {
+        if (!hasNavigationBar(context)) return 0;
+        Resources r = context.getResources();
+        DisplayMetrics dm = r.getDisplayMetrics();
+        Configuration config = r.getConfiguration();
+        boolean canMove = dm.widthPixels != dm.heightPixels && config.smallestScreenWidthDp < 600;
+        if (canMove && config.orientation == Configuration.ORIENTATION_LANDSCAPE) return 0;
+        String s = isPortrait(context) ? "navigation_bar_height" : "navigation_bar_height_landscape";
+        int id = r.getIdentifier(s, "dimen", "android");
+        if (id > 0) return r.getDimensionPixelSize(id);
+        return 0;
     }
 
 }

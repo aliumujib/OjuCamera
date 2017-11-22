@@ -38,7 +38,7 @@ public class GalleryAdapterByDecade extends BaseGalleryAdapter {
         final PickerTile movie = pickerTileList.get(position);
         final PickerTile nextMovie = pickerTileList.get(position + 1);
 
-        boolean shouldPlace = movie.getDateCreated().getDayOfYear()  != nextMovie.getDateCreated().getDayOfYear();
+        boolean shouldPlace = movie.getDateCreated().getMonthOfYear() != nextMovie.getDateCreated().getMonthOfYear();
 
         Log.d(TAG, "Should Place: " + shouldPlace);
 
@@ -54,7 +54,9 @@ public class GalleryAdapterByDecade extends BaseGalleryAdapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onItemClicked(pickerTile);
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClicked(pickerTile);
+                }
             }
         });
     }
@@ -63,7 +65,7 @@ public class GalleryAdapterByDecade extends BaseGalleryAdapter {
     public void onBindSubheaderViewHolder(SubheaderHolder subheaderHolder, int nextItemPosition) {
         super.onBindSubheaderViewHolder(subheaderHolder, nextItemPosition);
         final PickerTile nextMovie = pickerTileList.get(subheaderHolder.getAdapterPosition());
-        String date = DateTimeUtils.timeAgo(nextMovie.getDateCreated().getMillisOfSecond());
+        String date = DateTimeUtils.getMonthFromInt(nextMovie.getDateCreated().getMonthOfYear() + 1) + ", " + nextMovie.getDateCreated().getYear();
         subheaderHolder.mSubheaderText.setText(date);
     }
 }

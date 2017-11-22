@@ -165,7 +165,7 @@ public class PreviewActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preview);
+        setContentView(R.layout.oju_lib_activity_preview);
         mContext = this;
         surfaceView = (SurfaceView) findViewById(R.id.video_preview);
         surfaceView.setOnTouchListener(new View.OnTouchListener() {

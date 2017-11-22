@@ -2,21 +2,14 @@ package com.alium.ojucamera.internal.ui.view.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alium.ojucamera.R;
-import com.alium.ojucamera.internal.configuration.CameraConfiguration;
-import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 public class ImageGalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
 
@@ -36,7 +29,7 @@ public class ImageGalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder>
 
     @Override
     public GalleryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.image_item, null);
+        View view = View.inflate(context, R.layout.oju_lib_image_item, null);
         return new GalleryViewHolder(view);
     }
 

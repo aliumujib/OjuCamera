@@ -202,7 +202,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
 
     @Override
     View getUserContentView(LayoutInflater layoutInflater, ViewGroup parent) {
-        cameraControlPanel = (CameraControlPanel) layoutInflater.inflate(R.layout.user_control_layout, parent, false);
+        cameraControlPanel = (CameraControlPanel) layoutInflater.inflate(R.layout.oju_lib_user_control_layout, parent, false);
         cameraControlPanel.postInit(type);
 
         if (cameraControlPanel != null) {
