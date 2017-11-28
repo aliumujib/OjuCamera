@@ -208,6 +208,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
+            android:id="@+id/top_controls"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:paddingTop="10dp">

@@ -48,7 +48,7 @@ abstract public class OjuCameraActivity<CameraId> extends AppCompatActivity
     }
 
     // This snippet shows the system bars. It does this by removing all the flags
-// except for the ones that make the content appear under the system bars.
+    // except for the ones that make the content appear under the system bars.
     protected void showSystemUI() {
         View decorView = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -57,14 +57,6 @@ abstract public class OjuCameraActivity<CameraId> extends AppCompatActivity
         }
     }
 
-    protected int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

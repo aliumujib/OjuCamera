@@ -1,5 +1,6 @@
 package com.alium.ojucamera.internal.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -59,6 +60,15 @@ public class Utils {
     public static boolean hasNavigationBar(Context context) {
         if (Build.VERSION.SDK_INT < 19) return false; // could have but won't be translucent
         return !ViewConfiguration.get(context).hasPermanentMenuKey();
+    }
+
+    public static int getStatusBarHeight(Activity activity) {
+        int result = 0;
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = activity.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     public static int getNavigationBarHeight(Context context) {

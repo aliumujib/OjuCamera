@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,9 +72,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
     @CameraConfiguration.FlashMode
     protected int flashMode = CameraConfiguration.FLASH_MODE_AUTO;
     private GalleryPanelButtonView slidingUpPanelBtnControl;
-    private BottomSheetBehaviorv2<View> mBehavior;
-    private View mBottomSheet;
-    private CoordinatorLayout mCordinatorLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,34 +234,15 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
 
             cameraControlPanel.hideMultipleItemSelectView();
 
-         /*   slidingUpPanelBtnControl.setStateChangeListener(new GalleryPanelButtonView.GalleryPanelModeSwitchListener() {
-                @Override
-                public void onStateChanged(int mode) {
-                    if(mode == GalleryPanelButtonView.ANCHORED){
-                        updatePanelControlBtn(SlidingUpPanelLayout.PanelState.ANCHORED);
-                    }else if(mode == GalleryPanelButtonView.COLLAPSED){
-                        updatePanelControlBtn(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                    }else {
-                        updatePanelControlBtn(SlidingUpPanelLayout.PanelState.EXPANDED);
-                    }
-                }
-            });*/
 
-            mCordinatorLayout = (CoordinatorLayout) cameraControlPanel.findViewById(R.id.coordinatorLayout);
-            mCordinatorLayout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-
-            mBottomSheet = cameraControlPanel.findViewById(R.id.dragView);
-            mBehavior = BottomSheetBehaviorv2.from(mBottomSheet);
-            //mBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            mBehavior.setBottomSheetCallback(new BottomSheetBehaviorv2.BottomSheetCallback() {
+            cameraControlPanel.getCordinatorBehavior().setBottomSheetCallback(new BottomSheetBehaviorv2.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
                     // React to state change
-                    prepareforAnimation();
-                    updatePanelControlBtn(newState);
+                    showSystemUI();
+                    updateCameraCtrlPanel(newState);
                     if (newState == BottomSheetBehaviorv2.STATE_EXPANDED) {
                         showSystemUI();
-
                     }
 
                     if (newState == BottomSheetBehaviorv2.STATE_COLLAPSED || newState == BottomSheetBehaviorv2.STATE_HIDDEN) {
@@ -274,50 +254,19 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
                 public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                     // React to dragging events
                     cameraControlPanel.fadeViewsWithOffset(slideOffset);
+                    Log.i(TAG, "onPanelSlide, offset " + slideOffset);
                 }
             });
 
             cameraControlPanel.showRecyclerView();
 
 
-            //helper to rule scrolls
-            BottomSheetBehaviorRecyclerManager manager = new BottomSheetBehaviorRecyclerManager(mCordinatorLayout, mBehavior, mBottomSheet);
-            manager.addControl(cameraControlPanel.getAnchoredRecyclerView());
-            manager.addControl(cameraControlPanel.getExpandedRecyclerView());
-            manager.create();
 
-
-//            slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-//                @Override
-//                public void onPanelSlide(View panel, float slideOffset) {
-//                    cameraControlPanel.fadeViewsWithOffset(slideOffset);
-//                    //Log.i(TAG, "onPanelSlide, offset " + slideOffset);
-//                }
-//
-//                @Override
-//                public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-//
-//                   // Log.i(TAG, "onPanelStateChanged " + newState);
-//                }
-//            });
-//
-//            slidingUpPanelLayout.setFadeOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-//                }
-//            });
         }
         return cameraControlPanel;
     }
 
-    protected void prepareforAnimation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(mCordinatorLayout);
-        }
-    }
-
-    private void updatePanelControlBtn(int state) {
+    private void updateCameraCtrlPanel(int state) {
         slidingUpPanelBtnControl.setVisibility(View.VISIBLE);
         cameraControlPanel.hideRecyclerView();
         cameraControlPanel.showMultipleItemSelectView();

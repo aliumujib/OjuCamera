@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.FileObserver;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,6 +30,8 @@ import com.alium.ojucamera.internal.manager.listener.GalleryClickListener;
 import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
 import com.alium.ojucamera.internal.ui.view.adapters.ImageGalleryAdapter;
+import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorRecyclerManager;
+import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorv2;
 import com.alium.ojucamera.internal.utils.DateTimeUtils;
 
 import java.io.File;
@@ -49,6 +53,7 @@ public class CameraControlPanel extends RelativeLayout
     private FlashSwitchView flashSwitchView;
     private TextView recordDurationText;
     private TextView recordSizeText;
+    private RelativeLayout topControls;
     private ImageButton settingsButton;
     private ImageButton pickFromGalleryButton;
     private RecyclerView anchoredRecyclerView;
@@ -61,6 +66,10 @@ public class CameraControlPanel extends RelativeLayout
     private FlashSwitchView.FlashModeSwitchListener flashModeSwitchListener;
     private SettingsClickListener settingsClickListener;
     private PickerItemClickListener pickerItemClickListener;
+
+    private BottomSheetBehaviorv2<View> mBehavior;
+    private View mBottomSheet;
+    private CoordinatorLayout mCordinatorLayout;
 
     private TimerTaskBase countDownTimer;
     private long maxVideoFileSize = 0;
@@ -105,6 +114,7 @@ public class CameraControlPanel extends RelativeLayout
         recordDurationText = (TextView) findViewById(R.id.record_duration_text);
         recordSizeText = (TextView) findViewById(R.id.record_size_mb_text);
         anchoredRecyclerView = (RecyclerView) findViewById(R.id.anchored_recycler_view);
+        topControls = (RelativeLayout) findViewById(R.id.top_controls);
         multiSelectPicker = (MutipleItemSelectView) findViewById(R.id.multiselect_picker_view);
         anchoredRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         cameraSwitchView.setOnCameraTypeChangeListener(onCameraTypeChangeListener);
@@ -135,6 +145,28 @@ public class CameraControlPanel extends RelativeLayout
         else flashSwitchView.setVisibility(GONE);
 
         countDownTimer = new TimerTask(recordDurationText);
+
+        mCordinatorLayout = (CoordinatorLayout) this.findViewById(R.id.coordinatorLayout);
+        mCordinatorLayout.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+        mBottomSheet = this.findViewById(R.id.dragView);
+        mBehavior = BottomSheetBehaviorv2.from(mBottomSheet);
+
+        //helper to rule scrolls
+        BottomSheetBehaviorRecyclerManager manager = new BottomSheetBehaviorRecyclerManager(mCordinatorLayout, mBehavior, mBottomSheet);
+        manager.addControl(this.getAnchoredRecyclerView());
+        manager.addControl(this.getExpandedRecyclerView());
+        manager.create();
+    }
+
+    public BottomSheetBehaviorv2<View> getCordinatorBehavior() {
+        return mBehavior;
+    }
+
+    public void animateTopControls(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            TransitionManager.beginDelayedTransition(topControls);
+        }
     }
 
     public void hideRecyclerView() {
