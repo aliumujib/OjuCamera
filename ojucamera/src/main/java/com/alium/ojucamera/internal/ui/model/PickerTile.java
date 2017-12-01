@@ -14,9 +14,16 @@ public class PickerTile {
 
     protected final Uri imageUri;
     private LocalDateTime dateCreated;
-    private boolean isVideo;
+    private boolean isVideo, isSelected;
     private String TAG = getClass().getSimpleName();
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
 
     public boolean isVideo() {
         return isVideo;

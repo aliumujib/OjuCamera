@@ -21,6 +21,7 @@ import com.alium.ojucamera.internal.repository.MediaRepository;
 import com.alium.ojucamera.internal.ui.model.PickerTile;
 import com.alium.ojucamera.internal.ui.view.adapters.sectioned_adapter.BaseGalleryAdapter;
 import com.alium.ojucamera.internal.ui.view.adapters.sectioned_adapter.GalleryAdapterByDecade;
+import com.alium.ojucamera.internal.ui.view.dragselect.SelectItemAnimator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,6 +49,7 @@ public class MutipleItemSelectView extends LinearLayout {
     private Comparator<PickerTile> mediaComparator;
     private List<PickerTile> pickerTileArrayList = new ArrayList<>();
     private CameraControlPanel.PickerItemClickListener pickerItemClickListener;
+
 
     public MutipleItemSelectView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -111,10 +113,12 @@ public class MutipleItemSelectView extends LinearLayout {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4);
         mExpandedRecyclerView.setLayoutManager(gridLayoutManager);
         mSectionedRecyclerAdapter.setGridLayoutManager(gridLayoutManager);
+
         mSectionedRecyclerAdapter.setOnItemClickListener(new BaseGalleryAdapter.OnItemClickListener() {
             @Override
-            public void onItemClicked(PickerTile tile) {
-                pickerItemClickListener.onItemClick(tile.getImageUri());
+            public void onItemClicked(PickerTile tile, int position) {
+
+                //pickerItemClickListener.onItemClick(tile.getImageUri());
             }
 
             @Override
@@ -122,8 +126,19 @@ public class MutipleItemSelectView extends LinearLayout {
 
             }
         });
+
         mExpandedRecyclerView.setAdapter(mSectionedRecyclerAdapter);
+        mSectionedRecyclerAdapter.setLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int position = mExpandedRecyclerView.getChildAdapterPosition(v);
+                mSectionedRecyclerAdapter.setSelected(position, true);
+                return false;
+            }
+        });
+
         mSectionedRecyclerAdapter.addAll(pickerTiles);
+
     }
 
     public Activity getActivity() {
@@ -142,6 +157,7 @@ public class MutipleItemSelectView extends LinearLayout {
         mMultiselectPicker = (LinearLayout) view.findViewById(R.id.multiselect_picker);
         mMultiSelectorToolbar = (Toolbar) view.findViewById(R.id.multi_selector_toolbar);
         mExpandedRecyclerView = (RecyclerView) view.findViewById(R.id.expanded_recycler_view);
+
 
         if(getActivity() instanceof AppCompatActivity){
             ((AppCompatActivity)getActivity()).setSupportActionBar(mMultiSelectorToolbar);

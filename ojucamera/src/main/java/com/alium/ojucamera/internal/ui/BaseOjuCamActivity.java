@@ -1,5 +1,6 @@
 package com.alium.ojucamera.internal.ui;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,8 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,6 @@ import com.alium.ojucamera.internal.ui.view.FlashSwitchView;
 import com.alium.ojucamera.internal.ui.view.GalleryPanelButtonView;
 import com.alium.ojucamera.internal.ui.view.MediaActionSwitchView;
 import com.alium.ojucamera.internal.ui.view.RecordButton;
-import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorRecyclerManager;
 import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorv2;
 import com.alium.ojucamera.internal.utils.Size;
 import com.alium.ojucamera.internal.utils.Utils;
@@ -247,6 +245,7 @@ public abstract class BaseOjuCamActivity<CameraId> extends OjuCameraActivity<Cam
 
                     if (newState == BottomSheetBehaviorv2.STATE_COLLAPSED || newState == BottomSheetBehaviorv2.STATE_HIDDEN) {
                         hideSystemUI();
+
                     }
                 }
 

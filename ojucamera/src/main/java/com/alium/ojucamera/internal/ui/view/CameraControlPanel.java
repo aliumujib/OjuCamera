@@ -1,6 +1,9 @@
 package com.alium.ojucamera.internal.ui.view;
 
+import android.animation.Animator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -33,6 +36,7 @@ import com.alium.ojucamera.internal.ui.view.adapters.ImageGalleryAdapter;
 import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorRecyclerManager;
 import com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorv2;
 import com.alium.ojucamera.internal.utils.DateTimeUtils;
+import com.alium.ojucamera.internal.utils.Utils;
 
 import java.io.File;
 import java.util.List;
@@ -163,31 +167,45 @@ public class CameraControlPanel extends RelativeLayout
         return mBehavior;
     }
 
-    public void animateTopControls(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TransitionManager.beginDelayedTransition(topControls);
+    public void slideTopControlsDown(Animator.AnimatorListener animatorListener){
+        topControls.animate().setDuration(500).translationYBy(Utils.getStatusBarHeight(getActivity())).setListener(animatorListener).start();
+    }
+
+    public void slideTopControlsUp(Animator.AnimatorListener animatorListener){
+        topControls.animate().setDuration(500).translationYBy(-Utils.getStatusBarHeight(getActivity())).setListener(animatorListener).start();
+    }
+
+
+    public Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
         }
+        return null;
     }
 
     public void hideRecyclerView() {
-        anchoredRecyclerView.setVisibility(GONE);
+        Utils.animateViewVisibility(anchoredRecyclerView, GONE);
     }
 
     public void hideMultipleItemSelectView() {
-        multiSelectPicker.setVisibility(GONE);
+        Utils.animateViewVisibility(multiSelectPicker, GONE);
     }
 
     public void fadeViewsWithOffset(float slideOffset) {
-        anchoredRecyclerView.animate().alpha(1.0f - slideOffset);
+        anchoredRecyclerView.animate().setDuration(100).alpha(1.0f - slideOffset);
         if (slideOffset <= 0.2) {
-            multiSelectPicker.animate().alpha(0);
+            multiSelectPicker.animate().setDuration(100).alpha(0);
         } else {
-            multiSelectPicker.animate().alpha(slideOffset);
+            multiSelectPicker.animate().setDuration(100).alpha(slideOffset);
         }
     }
 
     public void showRecyclerView() {
-        anchoredRecyclerView.setVisibility(VISIBLE);
+        Utils.animateViewVisibility(anchoredRecyclerView, VISIBLE);
     }
 
     public RecyclerView getAnchoredRecyclerView() {
@@ -200,7 +218,7 @@ public class CameraControlPanel extends RelativeLayout
 
 
     public void showMultipleItemSelectView() {
-        multiSelectPicker.setVisibility(VISIBLE);
+        Utils.animateViewVisibility(multiSelectPicker, VISIBLE);
     }
 
     public void postInit(int mediatype) {

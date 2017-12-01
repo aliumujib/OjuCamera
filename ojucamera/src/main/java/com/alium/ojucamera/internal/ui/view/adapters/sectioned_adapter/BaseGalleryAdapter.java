@@ -36,7 +36,7 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
     }
 
     public interface OnItemClickListener {
-        void onItemClicked(PickerTile movie);
+        void onItemClicked(PickerTile movie, int position);
 
         void onSubheaderClicked(int position);
     }
@@ -77,7 +77,6 @@ public abstract class BaseGalleryAdapter extends SectionedRecyclerViewAdapter<Ba
     @Override
     @CallSuper
     public void onBindSubheaderViewHolder(final SubheaderHolder subheaderHolder, int nextItemPosition) {
-
         boolean isSectionExpanded = isSectionExpanded(getSectionIndex(subheaderHolder.getAdapterPosition()));
         subheaderHolder.mArrow.setImageDrawable(null);
         subheaderHolder.itemView.setOnClickListener(new View.OnClickListener() {

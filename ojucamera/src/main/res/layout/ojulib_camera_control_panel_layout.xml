@@ -346,6 +346,7 @@
         app:layout_behavior="com.alium.ojucamera.internal.ui.view.control.BottomSheetBehaviorv2">
 
 
+
         <LinearLayout
             android:id="@+id/anchor_parent"
             android:layout_width="match_parent"
@@ -365,6 +366,7 @@
                 android:id="@+id/anchored_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:visibility="visible" />
 
         </LinearLayout>

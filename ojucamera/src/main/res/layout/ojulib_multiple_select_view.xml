@@ -9,6 +9,7 @@
     android:id="@+id/multiselect_picker"
     android:focusable="false"
     android:background="@color/white"
+    android:animateLayoutChanges="true"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar

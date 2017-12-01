@@ -1,5 +1,7 @@
 package com.alium.ojucamera.internal.utils;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -9,6 +11,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Surface;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
@@ -69,6 +72,32 @@ public class Utils {
             result = activity.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    public static void animateViewVisibility(final View view, final int visibility)
+    {
+        // cancel runnning animations and remove and listeners
+        view.animate().cancel();
+        view.animate().setListener(null);
+
+        // animate making view visible
+        if (visibility == View.VISIBLE)
+        {
+            view.animate().alpha(1f).start();
+            view.setVisibility(View.VISIBLE);
+        }
+        // animate making view hidden (HIDDEN or INVISIBLE)
+        else
+        {
+            view.animate().setListener(new AnimatorListenerAdapter()
+            {
+                @Override
+                public void onAnimationEnd(Animator animation)
+                {
+                    view.setVisibility(visibility);
+                }
+            }).alpha(0f).start();
+        }
     }
 
     public static int getNavigationBarHeight(Context context) {
